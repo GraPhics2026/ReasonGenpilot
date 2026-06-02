@@ -1,0 +1,28 @@
+{
+  "final_image": "data\\output\\gen\\case_complex_picnic\\image_iter_1.png",
+  "final_prompt": "A top-down view of a red-and-white checkered picnic blanket. Exactly five objects arranged in a circle: at the top, a shiny red apple; on the right, a blue ceramic mug with a handle; at the bottom, a curved yellow banana; on the left, a transparent green glass bottle; in the center, a small white plate. Bright natural sunlight from above, casting soft shadows.",
+  "route": "gen",
+  "reasoning_chain": [],
+  "prompt_before": "A top-down view of a picnic blanket with exactly five objects arranged in a circle: a red apple at the top, a blue ceramic mug on the right, a yellow banana at the bottom, a green glass bottle on the left, and a small white plate in the center, bright natural sunlight.",
+  "iterations": [
+    {
+      "iteration": 0,
+      "prompt": "A top-down view of a picnic blanket with exactly five objects arranged in a circle: a red apple at the top, a blue ceramic mug on the right, a yellow banana at the bottom, a green glass bottle on the left, and a small white plate in the center, bright natural sunlight.",
+      "analysis": "Baseline generation from the original prompt.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_complex_picnic\\image_before.png"
+    },
+    {
+      "iteration": 1,
+      "prompt": "A top-down view of a red-and-white checkered picnic blanket. Exactly five objects arranged in a circle: at the top, a shiny red apple; on the right, a blue ceramic mug with a handle; at the bottom, a curved yellow banana; on the left, a transparent green glass bottle; in the center, a small white plate. Bright natural sunlight from above, casting soft shadows.",
+      "analysis": "MLLM prompt rewrite using GenPilot-style error analysis.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_complex_picnic\\image_iter_1.png"
+    }
+  ],
+  "metadata": {
+    "dry_run": false,
+    "num_iterations": 1,
+    "num_candidates": 3
+  }
+}

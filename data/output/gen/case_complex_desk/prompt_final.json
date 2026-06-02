@@ -1,0 +1,28 @@
+{
+  "final_image": "data\\output\\gen\\case_complex_desk\\image_iter_1.png",
+  "final_prompt": "A realistic study desk scene at night: three open notebooks stacked on the left, a black laptop in the center displaying a simple line chart, two silver pens crossed in front of the laptop, a warm desk lamp on the right casting soft amber light, a small cactus behind the lamp, cinematic shadows and low-key lighting.",
+  "route": "gen",
+  "reasoning_chain": [],
+  "prompt_before": "A realistic study desk scene at night: three open notebooks stacked on the left side, a black laptop in the center showing a simple line chart, two silver pens crossing each other in front of the laptop, a warm desk lamp on the right, and a small cactus behind the lamp, cinematic shadows.",
+  "iterations": [
+    {
+      "iteration": 0,
+      "prompt": "A realistic study desk scene at night: three open notebooks stacked on the left side, a black laptop in the center showing a simple line chart, two silver pens crossing each other in front of the laptop, a warm desk lamp on the right, and a small cactus behind the lamp, cinematic shadows.",
+      "analysis": "Baseline generation from the original prompt.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_complex_desk\\image_before.png"
+    },
+    {
+      "iteration": 1,
+      "prompt": "A realistic study desk scene at night: three open notebooks stacked on the left, a black laptop in the center displaying a simple line chart, two silver pens crossed in front of the laptop, a warm desk lamp on the right casting soft amber light, a small cactus behind the lamp, cinematic shadows and low-key lighting.",
+      "analysis": "MLLM prompt rewrite using GenPilot-style error analysis.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_complex_desk\\image_iter_1.png"
+    }
+  ],
+  "metadata": {
+    "dry_run": false,
+    "num_iterations": 1,
+    "num_candidates": 3
+  }
+}

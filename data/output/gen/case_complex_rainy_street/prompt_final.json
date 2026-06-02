@@ -1,0 +1,28 @@
+{
+  "final_image": "data\\output\\gen\\case_complex_rainy_street\\image_iter_1.png",
+  "final_prompt": "A rainy city street scene: foreground red umbrella, middle ground exactly two people in yellow raincoats walking beside a blue taxi, a green traffic light above them, wet pavement reflecting neon signs, tall gray buildings in the background.",
+  "route": "gen",
+  "reasoning_chain": [],
+  "prompt_before": "A rainy city street scene with a red umbrella in the foreground, exactly two people wearing yellow raincoats walking beside a blue taxi in the middle ground, a green traffic light above them, wet pavement reflecting neon signs, and tall gray buildings in the background.",
+  "iterations": [
+    {
+      "iteration": 0,
+      "prompt": "A rainy city street scene with a red umbrella in the foreground, exactly two people wearing yellow raincoats walking beside a blue taxi in the middle ground, a green traffic light above them, wet pavement reflecting neon signs, and tall gray buildings in the background.",
+      "analysis": "Baseline generation from the original prompt.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_complex_rainy_street\\image_before.png"
+    },
+    {
+      "iteration": 1,
+      "prompt": "A rainy city street scene: foreground red umbrella, middle ground exactly two people in yellow raincoats walking beside a blue taxi, a green traffic light above them, wet pavement reflecting neon signs, tall gray buildings in the background.",
+      "analysis": "MLLM prompt rewrite using GenPilot-style error analysis.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_complex_rainy_street\\image_iter_1.png"
+    }
+  ],
+  "metadata": {
+    "dry_run": false,
+    "num_iterations": 1,
+    "num_candidates": 3
+  }
+}
