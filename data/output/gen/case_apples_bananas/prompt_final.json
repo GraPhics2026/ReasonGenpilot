@@ -1,0 +1,28 @@
+{
+  "final_image": "data\\output\\gen\\case_apples_bananas\\image_iter_1.png",
+  "final_prompt": "Three red apples on the left side of a blue bowl, two yellow bananas on the right side, studio lighting, soft shadows, high detail.",
+  "route": "gen",
+  "reasoning_chain": [],
+  "prompt_before": "Three red apples on the left side of a blue bowl, with two yellow bananas on the right side, studio lighting.",
+  "iterations": [
+    {
+      "iteration": 0,
+      "prompt": "Three red apples on the left side of a blue bowl, with two yellow bananas on the right side, studio lighting.",
+      "analysis": "Baseline generation from the original prompt.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_apples_bananas\\image_before.png"
+    },
+    {
+      "iteration": 1,
+      "prompt": "Three red apples on the left side of a blue bowl, two yellow bananas on the right side, studio lighting, soft shadows, high detail.",
+      "analysis": "MLLM prompt rewrite using GenPilot-style error analysis.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_apples_bananas\\image_iter_1.png"
+    }
+  ],
+  "metadata": {
+    "dry_run": false,
+    "num_iterations": 1,
+    "num_candidates": 3
+  }
+}

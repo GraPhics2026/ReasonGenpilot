@@ -1,0 +1,28 @@
+{
+  "final_image": "data\\output\\gen\\case_cups_spoons\\image_iter_1.png",
+  "final_prompt": "Exactly four blue ceramic cups arranged in an evenly spaced straight line on a white kitchen counter, with one small red spoon placed directly in front of each cup.",
+  "route": "gen",
+  "reasoning_chain": [],
+  "prompt_before": "Exactly four blue ceramic cups arranged in a straight line on a white kitchen counter, with one small red spoon in front of each cup.",
+  "iterations": [
+    {
+      "iteration": 0,
+      "prompt": "Exactly four blue ceramic cups arranged in a straight line on a white kitchen counter, with one small red spoon in front of each cup.",
+      "analysis": "Baseline generation from the original prompt.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_cups_spoons\\image_before.png"
+    },
+    {
+      "iteration": 1,
+      "prompt": "Exactly four blue ceramic cups arranged in an evenly spaced straight line on a white kitchen counter, with one small red spoon placed directly in front of each cup.",
+      "analysis": "MLLM prompt rewrite using GenPilot-style error analysis.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_cups_spoons\\image_iter_1.png"
+    }
+  ],
+  "metadata": {
+    "dry_run": false,
+    "num_iterations": 1,
+    "num_candidates": 3
+  }
+}

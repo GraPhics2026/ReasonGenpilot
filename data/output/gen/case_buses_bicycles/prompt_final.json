@@ -1,0 +1,28 @@
+{
+  "final_image": "data\\output\\gen\\case_buses_bicycles\\image_iter_1.png",
+  "final_prompt": "Two yellow school buses parked behind three red bicycles, in front of a brick school building, wide angle shot.",
+  "route": "gen",
+  "reasoning_chain": [],
+  "prompt_before": "Two yellow school buses parked behind three red bicycles, in front of a brick school building, wide angle view.",
+  "iterations": [
+    {
+      "iteration": 0,
+      "prompt": "Two yellow school buses parked behind three red bicycles, in front of a brick school building, wide angle view.",
+      "analysis": "Baseline generation from the original prompt.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_buses_bicycles\\image_before.png"
+    },
+    {
+      "iteration": 1,
+      "prompt": "Two yellow school buses parked behind three red bicycles, in front of a brick school building, wide angle shot.",
+      "analysis": "MLLM prompt rewrite using GenPilot-style error analysis.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_buses_bicycles\\image_iter_1.png"
+    }
+  ],
+  "metadata": {
+    "dry_run": false,
+    "num_iterations": 1,
+    "num_candidates": 3
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "final_image": "data\\output\\gen\\case_dog_cat_bench\\image_iter_1.png",
+  "final_prompt": "A small brown dog sits under a green park bench, a black cat sleeps on top of the bench, sunny afternoon.",
+  "route": "gen",
+  "reasoning_chain": [],
+  "prompt_before": "A small brown dog sitting under a green park bench, while a black cat sleeps on top of the bench, sunny afternoon.",
+  "iterations": [
+    {
+      "iteration": 0,
+      "prompt": "A small brown dog sitting under a green park bench, while a black cat sleeps on top of the bench, sunny afternoon.",
+      "analysis": "Baseline generation from the original prompt.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_dog_cat_bench\\image_before.png"
+    },
+    {
+      "iteration": 1,
+      "prompt": "A small brown dog sits under a green park bench, a black cat sleeps on top of the bench, sunny afternoon.",
+      "analysis": "MLLM prompt rewrite using GenPilot-style error analysis.",
+      "score": null,
+      "image_path": "data\\output\\gen\\case_dog_cat_bench\\image_iter_1.png"
+    }
+  ],
+  "metadata": {
+    "dry_run": false,
+    "num_iterations": 1,
+    "num_candidates": 3
+  }
+}
