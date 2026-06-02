@@ -1,0 +1,4 @@
+Reasoning type: temporal
+Visual cues from source image: The subject is a young adult male with dark, styled hair and smooth skin.; He wears a light blue t-shirt, dark jeans, and white sneakers.; The background consists of a grassy field, trees, and a clear sky, indicating an outdoor daytime setting.
+Expected physical/causal outcome: Skin texture will show fine lines and wrinkles around the eyes, mouth, and forehead.; Hair color will transition from dark to gray or white, especially at the temples and crown.; Posture may appear slightly stooped due to natural aging effects.
+Must preserve: The park setting (grass, trees, sky), Clothing style and colors, Lighting and time of day

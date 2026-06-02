@@ -1,0 +1,39 @@
+{
+  "final_image": "data/output/gen/case_young_man/image_iter_1.png",
+  "final_prompt": "Portrait photo of a young man in his early twenties with a clear face, smooth skin, and dark hair, standing outdoors in natural light, captured in photorealistic detail.",
+  "route": "gen",
+  "reasoning_chain": [],
+  "prompt_before": "Portrait photo of a young man in his early twenties, clear face with smooth skin and dark hair, standing outdoors in natural light, photorealistic",
+  "iterations": [
+    {
+      "iteration": 0,
+      "prompt": "Portrait photo of a young man in his early twenties, clear face with smooth skin and dark hair, standing outdoors in natural light, photorealistic",
+      "analysis": "Baseline generation from the original prompt. {\"score\": 0.95, \"passed\": [\"The image depicts a single young man.\", \"The subject is in his early twenties.\", \"The face is clear and well-defined.\", \"The skin appears smooth without visible imperfections.\", \"The hair is dark in color.\", \"The subject is standing outdoors.\", \"The lighting is natural, consistent with daylight.\", \"The image is rendered in a photorealistic style.\"], \"errors\": [], \"summary\": \"The image closely matches the prompt checklist with only minor deviations.\"}",
+      "score": 0.95,
+      "image_path": "data/output/gen/case_young_man/image_before.png"
+    },
+    {
+      "iteration": 1,
+      "prompt": "Portrait photo of a young man in his early twenties with a clear face, smooth skin, and dark hair, standing outdoors in natural light, captured in photorealistic detail.",
+      "analysis": "Simple MLLM prompt rewrite. {\"score\": 1.0, \"passed\": [\"The image depicts a single young man.\", \"The subject is in his early twenties.\", \"The face is clear and well-defined.\", \"The skin appears smooth without visible imperfections.\", \"The hair is dark in color.\", \"The subject is standing outdoors.\", \"The lighting is natural, consistent with daylight.\", \"The image is rendered in a photorealistic style.\"], \"errors\": [], \"summary\": \"The image perfectly matches the original prompt checklist.\"}",
+      "score": 1.0,
+      "image_path": "data/output/gen/case_young_man/image_iter_1.png"
+    }
+  ],
+  "metadata": {
+    "dry_run": false,
+    "strategy": "simple",
+    "num_iterations": 1,
+    "num_candidates": 1,
+    "constraints": [
+      "The image depicts a single young man.",
+      "The subject is in his early twenties.",
+      "The face is clear and well-defined.",
+      "The skin appears smooth without visible imperfections.",
+      "The hair is dark in color.",
+      "The subject is standing outdoors.",
+      "The lighting is natural, consistent with daylight.",
+      "The image is rendered in a photorealistic style."
+    ]
+  }
+}

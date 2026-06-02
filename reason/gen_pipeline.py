@@ -33,7 +33,7 @@ def run_gen_pipeline(
     prompt: str,
     output_dir: str | Path,
     iterations: int = 2,
-    candidates: int = 3,
+    candidates: int = 2,
     dry_run: bool | None = None,
     seed: int | None = None,
     strategy: str = "genpilot",
@@ -434,7 +434,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--prompt", required=True, help="Text-to-image prompt.")
     parser.add_argument("--output", required=True, help="Output directory.")
     parser.add_argument("--iterations", type=int, default=2)
-    parser.add_argument("--candidates", type=int, default=3)
+    parser.add_argument("--candidates", type=int, default=2)
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument(
         "--strategy",

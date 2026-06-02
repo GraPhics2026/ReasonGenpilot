@@ -1,0 +1,28 @@
+{
+  "strategy": "interaction_edit",
+  "mask_targets": [
+    "elephant",
+    "squirrel"
+  ],
+  "preserve_objects": [
+    "sky"
+  ],
+  "inpaint_prompt": "a seesaw positioned between the elephant and squirrel, with the elephant on one end causing the squirrel to be lifted high into the air",
+  "coverage": 0.7557,
+  "edit_boxes": [
+    [
+      54,
+      72,
+      1005,
+      1024
+    ]
+  ],
+  "preserve_boxes": [
+    [
+      0,
+      0,
+      1024,
+      225
+    ]
+  ]
+}

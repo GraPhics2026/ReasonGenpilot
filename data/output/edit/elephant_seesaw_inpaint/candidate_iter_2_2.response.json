@@ -1,0 +1,23 @@
+{
+  "request_id": "02c5cc42-0601-98d8-8f5a-b35ec40fb9f1",
+  "output": {
+    "task_id": "e20fa344-ccb9-4f82-91e6-15c8463712c6",
+    "task_status": "SUCCEEDED",
+    "submit_time": "2026-06-03 01:19:43.875",
+    "scheduled_time": "2026-06-03 01:19:43.907",
+    "end_time": "2026-06-03 01:19:54.509",
+    "results": [
+      {
+        "url": "https://dashscope-result-wlcb-acdr-1.oss-cn-wulanchabu-acdr-1.aliyuncs.com/1d/d3/20260603/901e463f/21ea79d8-b293-4230-8905-568e67d362b23716680355.png?Expires=1780507193&OSSAccessKeyId=LTAI5tKPD3TMqf2Lna1fASuh&Signature=P9k6Fp4nPFP2hhwUoChqPvcyaaE%3D"
+      }
+    ],
+    "task_metrics": {
+      "TOTAL": 1,
+      "SUCCEEDED": 1,
+      "FAILED": 0
+    }
+  },
+  "usage": {
+    "image_count": 1
+  }
+}

@@ -1,0 +1,4 @@
+Reasoning type: causal
+Visual cues from source image: The man is wearing a light blue shirt and khaki pants, standing on grass with a bench and trees in the background.; The golden retriever is seated calmly next to the man, with its fur smooth and ears relaxed.; The scene is outdoors in a park during daylight with clear skies.
+Expected physical/causal outcome: The man's body will shift backward or sideways to avoid the dog.; The dog's head and mouth will move forward aggressively toward the man.; The dog's tail may wag more rapidly due to excitement or aggression.
+Must preserve: the background (trees, benches, grass), the man's clothing and the dog's overall appearance

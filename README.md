@@ -1,6 +1,6 @@
 # ReasonGenPilot
 
-无训练的图像生成与假设性编辑 Agent 系统。当前仓库完成的是**成员 1**部分：项目基座与 `gen` 文生图优化通路。
+无训练的图像生成与假设性编辑 Agent 系统。当前仓库已完成 **gen** 文生图优化通路与 **edit** 假设性编辑通路。
 
 ## 项目目标
 
@@ -9,19 +9,29 @@ ReasonGenPilot 计划支持三条通路：
 | 通路 | 输入 | 目标 |
 | --- | --- | --- |
 | `gen` | 纯文本 prompt | 优化 prompt，并生成更符合描述的图像 |
-| `edit` | 原图 + 假设性指令 | 推理局部变化，再进行图像编辑 |
+| `edit` | 原图 + 假设性指令 | 推理反事实变化，指令式编辑并 VQA 验证 |
 | `hybrid` | 原图 + 大幅变化指令 | 推理目标场景，再重新生成整图 |
 
-当前已实现 `gen` 通路，后续 `edit`、`hybrid`、router 和 demo 可在此基础上继续接入。
+当前已实现 `gen` 与 `edit`；`hybrid`、router 和 demo 可在此基础上继续接入。
 
 ## 已实现功能
+
+**gen 通路（成员 1）**
 
 - 项目基础目录与配置模板
 - OpenAI-compatible MLLM 调用封装
 - DashScope Qwen-Image / OpenAI-like 文生图接口封装
 - `dry_run` 占位图模式，方便无 API 时验证流程
 - `gen` 通路命令行入口
-- 统一返回结构，方便后续成员对接
+
+**edit 通路（成员 2）**
+
+- Reason Agent（ReasonBrain 启发）：四类推理（physical / temporal / causal / story）、细粒度 `visual_cues` / `physics_implications` / `preserve_objects`
+- 指令式图像编辑（DashScope Qwen-Image，**无 mask**，图条件全局编辑）
+- `finalize_edit_prompt()` 将物理约束与保留对象注入编辑 prompt；推理上下文贯穿 VQA / refine / 多候选
+- 多候选 `edit_prompt` 生成、VQA 打分选优与 refine 迭代（默认至少 2 轮）
+- 输出 `reason_analysis.json`、`reason_context.txt` 便于调试与报告
+- `edit` 通路命令行入口与统一返回结构
 
 ## 目录结构
 
@@ -30,13 +40,24 @@ ReasonGenPilot/
 ├── config/
 │   └── .env.example
 ├── data/
-│   └── input/
-│       └── original_prompts.txt
+│   ├── input/
+│   │   ├── original_prompts.txt
+│   │   └── edit/edit_cases.jsonl
+│   └── output/
+│       ├── gen/
+│       └── edit/
 ├── prompts/
-│   └── gen_system.txt
+│   ├── gen_system.txt
+│   ├── reason_system.txt
+│   ├── edit_refine.txt
+│   └── edit_candidate.txt
 ├── reason/
 │   ├── api_client.py
 │   ├── gen_pipeline.py
+│   ├── edit_pipeline.py
+│   ├── edit_client.py
+│   ├── edit_verify_loop.py
+│   ├── reason_agent.py
 │   ├── schemas.py
 │   └── t2i_client.py
 ├── requirements.txt
@@ -58,20 +79,26 @@ pip install -r requirements.txt
 
 ```env
 MLLM_API_KEY=your_mllm_key_here
-MLLM_BASE_URL=https://api.deepseek.com
-MLLM_MODEL=deepseek-v4-flash
+MLLM_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+MLLM_MODEL=qwen-vl-plus
 MLLM_TIMEOUT=60
 
 T2I_BACKEND=dashscope
 T2I_API_KEY=your_t2i_key_here
 T2I_BASE_URL=https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation
 T2I_MODEL=qwen-image-2.0
-COMFYUI_URL=http://127.0.0.1:8188
+
+EDIT_BACKEND=dashscope
+EDIT_API_KEY=your_edit_key_here
+EDIT_BASE_URL=https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation
+EDIT_MODEL=qwen-image-2.0
 ```
+
+`EDIT_*` 可与 `T2I_*` 共用同一组 DashScope 密钥。
 
 ## 运行方式
 
-### 1. Dry-run 测试
+### gen：Dry-run 测试
 
 不调用真实出图 API，只生成 SVG 占位图，用来检查 pipeline 是否跑通。
 
@@ -83,7 +110,7 @@ python -m reason.gen_pipeline `
   --seed 42
 ```
 
-### 2. 真实 API 出图
+### gen：真实 API 出图
 
 使用 `--real-api` 后，会调用配置好的 MLLM 优化 prompt，再调用文生图后端生成图片。
 
@@ -95,21 +122,34 @@ python -m reason.gen_pipeline `
   --real-api
 ```
 
-## 输出文件
+### edit：Dry-run 测试
 
-运行后会在指定输出目录中生成：
+```powershell
+python -m reason.edit_pipeline `
+  --image data/input/edit/elephant_squirrel_grass.png `
+  --instruction "大象和松鼠玩跷跷板会怎样呢?" `
+  --output data/output/edit/elephant_seesaw_dry `
+  --iterations 2 `
+  --min-iterations 2 `
+  --candidates 2
+```
 
-| 文件 | 含义 |
-| --- | --- |
-| `image_before.png` / `.svg` | 原始 prompt 直接生成的 baseline 图 |
-| `image_iter_1.png` / `.svg` | 第 1 轮优化 prompt 后生成的图 |
-| `final_prompt.txt` | 最终优化后的 prompt |
-| `prompt_final.json` | 完整运行记录，包括每轮 prompt 和图片路径 |
-| `*.response.json` | 真实出图接口返回的原始响应，便于排查问题 |
+### edit：真实 API 编辑
+
+```powershell
+python -m reason.edit_pipeline `
+  --image data/input/edit/elephant_squirrel_grass.png `
+  --instruction "大象和松鼠玩跷跷板会怎样呢?" `
+  --output data/output/edit/elephant_seesaw `
+  --iterations 2 `
+  --min-iterations 2 `
+  --candidates 2 `
+  --real-api
+```
 
 ## 返回结构
 
-`run_gen_pipeline()` 的返回结构如下，后续成员可以直接复用：
+`run_gen_pipeline()` 返回示例：
 
 ```json
 {
@@ -120,13 +160,29 @@ python -m reason.gen_pipeline `
 }
 ```
 
+`run_edit_pipeline()` 返回 `EditPipelineResult`，含 `edit_prompt`、`vqa_checklist`、`vqa_result`、`iterations`、`metadata.reasoning_type` 等字段，`route` 为 `"edit"`。
+
+单独调用 Reason Agent 时，`ReasonResult` 还包含 `reasoning_type`、`visual_cues`、`physics_implications`、`preserve_objects`（详见 [对接说明.md](./对接说明.md)）。
+
 更详细的对接方式见 [对接说明.md](./对接说明.md)。
+
+## 设计说明：与 ReasonBrain 的关系
+
+本项目参考 [ReasonBrain 论文](https://arxiv.org/abs/2507.01908) 的**假设性指令编辑（HI-IE）**任务与四类推理场景，但在工程上采用 **无训练 Agent + 云端 API** 路线：
+
+| ReasonBrain（论文） | ReasonGenPilot（本仓库） |
+|---------------------|--------------------------|
+| Reason50K 训练数据 | 零样本 MLLM prompt（`reason_system.txt`） |
+| FRCE / CME 模块 | `visual_cues` + `physics_implications` + `preserve_objects` |
+| FLUX 扩散端到端 | DashScope **Qwen-Image 指令编辑** |
+| 一次 forward | 多候选 + VQA + refine 迭代 |
+
+当前 **edit 默认使用指令编辑，不使用 mask inpaint**（实验表明整图条件编辑在主体保留与场景协调上更稳定）。
 
 ## 后续开发
 
-- 成员 2：基于 `api_client.py` 接入 Reason Agent、Mask 和 Inpaint，完成 `edit` 通路。
-- 成员 3：复用 `run_gen_pipeline()`，完成 `hybrid` 通路和验证迭代。
-- 成员 4：实现 router、统一入口、Gradio demo 和最终文档。
+- 成员 3：基于 `reason_agent` hybrid 模式实现 `hybrid_pipeline.py`，复用 `run_gen_pipeline()`。
+- 成员 4：实现 router、统一入口 `pipeline.py`、Gradio demo 和最终文档。
 
 ## GenPilot 集成
 

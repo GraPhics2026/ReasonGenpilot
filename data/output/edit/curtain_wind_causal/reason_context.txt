@@ -1,0 +1,4 @@
+Reasoning type: physical
+Visual cues from source image: Dark, heavy velvet curtains fully covering the window.; Closed window behind the curtains.; Still, undisturbed state of the bed and surrounding objects.; Indoor lighting from table lamps and ceiling light.
+Expected physical/causal outcome: The curtains will appear to be pushed outward or pulled inward depending on wind direction.; Fabric folds and drapes will change dynamically due to air movement.; No other objects in the room will visibly shift unless directly affected by strong gusts (unlikely here).
+Must preserve: The bed, pillows, blankets, nightstands, lamps, potted plant, and overall room layout.

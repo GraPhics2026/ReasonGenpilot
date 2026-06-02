@@ -1,0 +1,3 @@
+Step 1: The image shows a large elephant standing on grass, with a much smaller squirrel nearby. The elephant is significantly heavier than the squirrel.
+Step 2: The hypothetical instruction implies placing both animals on a seesaw (跷跷板), which would cause imbalance due to their size and weight difference.
+Step 3: The expected visual outcome is that the elephant's side of the seesaw would be pushed down to the ground, while the squirrel's side would be lifted high into the air.

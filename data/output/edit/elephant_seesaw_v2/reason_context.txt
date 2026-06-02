@@ -1,0 +1,4 @@
+Reasoning type: physical
+Visual cues from source image: The elephant is large, heavy, and positioned on the left side of the frame.; The squirrel is small, light, and located on the right side of the frame.; The terrain is flat grassland, suitable for placing a seesaw.; The elephant's trunk is relaxed and not interacting with any object.
+Expected physical/causal outcome: The elephant's immense weight will cause its side of the seesaw to depress sharply toward the ground.; The squirrel's side of the seesaw will rise dramatically, potentially flipping the squirrel upward.; The seesaw itself will tilt at a steep angle, with the elephant's end nearly touching the ground.
+Must preserve: The grassy field, The sky, The overall landscape background

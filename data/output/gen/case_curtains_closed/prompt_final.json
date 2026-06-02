@@ -1,0 +1,37 @@
+{
+  "final_image": "data/output/gen/case_curtains_closed/image_iter_1.png",
+  "final_prompt": "A cozy bedroom interior featuring a large window with heavy dark curtains fully closed and drawn shut, soft warm yellow indoor lighting illuminating the space, no visible wind movement, captured in a photorealistic photograph.",
+  "route": "gen",
+  "reasoning_chain": [],
+  "prompt_before": "A cozy bedroom interior with a large window, heavy curtains fully closed and drawn shut, soft warm indoor lighting, no wind, photorealistic photograph",
+  "iterations": [
+    {
+      "iteration": 0,
+      "prompt": "A cozy bedroom interior with a large window, heavy curtains fully closed and drawn shut, soft warm indoor lighting, no wind, photorealistic photograph",
+      "analysis": "Baseline generation from the original prompt. {\"score\": 1.0, \"passed\": [\"The scene depicts a bedroom interior.\", \"There is a large window visible in the room.\", \"Heavy curtains are fully closed and drawn shut.\", \"The lighting in the room is soft and warm.\", \"There is no indication of wind (e.g., no movement in curtains or objects).\", \"The image is a photorealistic photograph.\"], \"errors\": [], \"summary\": \"The image perfectly matches all elements of the original prompt checklist.\"}",
+      "score": 1.0,
+      "image_path": "data/output/gen/case_curtains_closed/image_before.png"
+    },
+    {
+      "iteration": 1,
+      "prompt": "A cozy bedroom interior featuring a large window with heavy dark curtains fully closed and drawn shut, soft warm yellow indoor lighting illuminating the space, no visible wind movement, captured in a photorealistic photograph.",
+      "analysis": "Simple MLLM prompt rewrite. {\"score\": 1.0, \"passed\": [\"The scene depicts a bedroom interior.\", \"There is a large window visible in the room.\", \"Heavy curtains are fully closed and drawn shut.\", \"The lighting in the room is soft and warm.\", \"There is no indication of wind (e.g., no movement in curtains or objects).\", \"The image is a photorealistic photograph.\"], \"errors\": [], \"summary\": \"The image perfectly matches all elements described in the prompt checklist.\"}",
+      "score": 1.0,
+      "image_path": "data/output/gen/case_curtains_closed/image_iter_1.png"
+    }
+  ],
+  "metadata": {
+    "dry_run": false,
+    "strategy": "simple",
+    "num_iterations": 1,
+    "num_candidates": 1,
+    "constraints": [
+      "The scene depicts a bedroom interior.",
+      "There is a large window visible in the room.",
+      "Heavy curtains are fully closed and drawn shut.",
+      "The lighting in the room is soft and warm.",
+      "There is no indication of wind (e.g., no movement in curtains or objects).",
+      "The image is a photorealistic photograph."
+    ]
+  }
+}

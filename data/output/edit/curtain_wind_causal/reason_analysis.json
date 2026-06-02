@@ -1,0 +1,43 @@
+{
+  "mode": "edit",
+  "reasoning_chain": [
+    "Step 1: The image shows a closed bedroom with heavy dark curtains covering the window. The bed is neatly made, and the room is lit by lamps.",
+    "Step 2: The instruction implies opening the window and introducing wind, which would cause the curtains to move outward or billow.",
+    "Step 3: The bed, furniture, and lighting should remain unchanged; only the curtains and their interaction with wind need to be edited."
+  ],
+  "vqa_checklist": [
+    {
+      "q": "Are the curtains visible and partially open?",
+      "expected": "yes"
+    },
+    {
+      "q": "Do the curtains appear to be moving or billowing?",
+      "expected": "yes"
+    },
+    {
+      "q": "Is the bed and surrounding furniture still in its original position?",
+      "expected": "yes"
+    }
+  ],
+  "edit_prompt": "Edit the image to show the dark curtains partially open and billowing outward as if blown by wind, while keeping the bed, lamps, and room interior unchanged.",
+  "scene_prompt": null,
+  "target_objects": [
+    "The curtains covering the window."
+  ],
+  "reasoning_type": "physical",
+  "visual_cues": [
+    "Dark, heavy velvet curtains fully covering the window.",
+    "Closed window behind the curtains.",
+    "Still, undisturbed state of the bed and surrounding objects.",
+    "Indoor lighting from table lamps and ceiling light."
+  ],
+  "physics_implications": [
+    "The curtains will appear to be pushed outward or pulled inward depending on wind direction.",
+    "Fabric folds and drapes will change dynamically due to air movement.",
+    "No other objects in the room will visibly shift unless directly affected by strong gusts (unlikely here)."
+  ],
+  "preserve_objects": [
+    "The bed, pillows, blankets, nightstands, lamps, potted plant, and overall room layout."
+  ],
+  "reason_context": "Reasoning type: physical\nVisual cues from source image: Dark, heavy velvet curtains fully covering the window.; Closed window behind the curtains.; Still, undisturbed state of the bed and surrounding objects.; Indoor lighting from table lamps and ceiling light.\nExpected physical/causal outcome: The curtains will appear to be pushed outward or pulled inward depending on wind direction.; Fabric folds and drapes will change dynamically due to air movement.; No other objects in the room will visibly shift unless directly affected by strong gusts (unlikely here).\nMust preserve: The bed, pillows, blankets, nightstands, lamps, potted plant, and overall room layout."
+}

@@ -1,0 +1,6 @@
+{"image": "data/input/edit/plate_buns.png", "instruction": "如果盘子变成蓝色陶瓷材质会怎样", "note": "physical/material counterfactual"}
+{"image": "data/input/edit/elephant_squirrel_grass.png", "instruction": "大象和松鼠玩跷跷板会怎样呢?", "note": "physical/seesaw; gen-produced input"}
+{"image": "data/input/edit/ice_cubes_sunny.png", "instruction": "如果冰块在太阳照射下会怎样?", "note": "physical/melt; gen-produced input"}
+{"image": "data/input/edit/curtains_closed.png", "instruction": "打开窗户，此时有风。", "note": "causal/wind; gen-produced input (closed curtains)"}
+{"image": "data/input/edit/young_man.png", "instruction": "过去了几十年他会变成怎样？", "note": "temporal/aging; gen-produced input"}
+{"image": "data/input/edit/person_dog_park.png", "instruction": "如果此时狗要咬他，他会如何表现呢？", "note": "story/dog chase reaction; gen-produced input"}
