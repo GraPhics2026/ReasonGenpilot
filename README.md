@@ -10,9 +10,9 @@ ReasonGenPilot 计划支持三条通路：
 | --- | --- | --- |
 | `gen` | 纯文本 prompt | 优化 prompt，并生成更符合描述的图像 |
 | `edit` | 原图 + 假设性指令 | 推理反事实变化，指令式编辑并 VQA 验证 |
-| `hybrid` | 原图 + 大幅变化指令 | 推理目标场景，再重新生成整图 |
+| `hybrid` | 原图 + 假设性指令，但需**整图重生成** | Reason 展开 `scene_prompt`，再走 gen 文生图（**非**指令编辑） |
 
-当前已实现 `gen` 与 `edit`；`hybrid`、router 和 demo 可在此基础上继续接入。
+当前已实现 `gen` 与 `edit`；`hybrid` 的 Reason 接口已有（`mode="hybrid"`），`hybrid_pipeline.py`、router 和 demo 待成员 3/4 接入。
 
 ## 已实现功能
 
@@ -181,8 +181,12 @@ python -m reason.edit_pipeline `
 
 ## 后续开发
 
-- 成员 3：基于 `reason_agent` hybrid 模式实现 `hybrid_pipeline.py`，复用 `run_gen_pipeline()`。
-- 成员 4：实现 router、统一入口 `pipeline.py`、Gradio demo 和最终文档。
+**hybrid（成员 3）**：有原图 + 假设性指令，但变化过大、不适合在原图上指令编辑时（如物体数量重组、昼夜整场景切换）→ Reason Agent 输出 `scene_prompt`，复用 `run_gen_pipeline()` 从零出图。与 edit 共用 `reason_system.txt` 与四类推理字段，**不走 Edit API**。
+
+- 待做：`reason/hybrid_pipeline.py`、`data/input/hybrid/hybrid_cases.jsonl`
+- 已有：`run_reason_agent(..., mode="hybrid")` → `scene_prompt`
+
+**集成（成员 4）**：router、统一入口 `pipeline.py`、Gradio demo。
 
 ## GenPilot 集成
 

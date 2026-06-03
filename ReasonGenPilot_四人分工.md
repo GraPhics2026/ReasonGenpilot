@@ -73,14 +73,16 @@ python -m reason.edit_pipeline \
 
 ## 成员 3：hybrid + edit 验证调优
 
-接上 gen 和 edit，补 **hybrid 通路**（推理后整图重生成）；edit 的 VQA 验证闭环已在 `edit_pipeline.py` 中实现，本阶段以调参与 hybrid 为主。
+接上 gen 和 edit，补 **hybrid 通路**（Reason → `scene_prompt` → gen 整图重生成，**不用 Edit API**）；edit 的 VQA 闭环已在 `edit_pipeline.py` 中实现。
 
-| 任务 | 产出 |
-|------|------|
-| `reason/reason_agent.py` hybrid 模式（`mode="hybrid"` → `scene_prompt`） | 与 edit 共用 `prompts/reason_system.txt` |
-| `data/input/hybrid/hybrid_cases.jsonl` + 参考原图 | 如「一束花变两束玫瑰」 |
-| `reason/hybrid_pipeline.py` | hybrid 推理 → 复用 `run_gen_pipeline` |
-| 调优 `edit_verify_loop` / `edit_pipeline` 参数 | `iterations`、`candidates`、`score_threshold` 等实验记录 |
+**何时走 hybrid**：构图/物体数量/全场景氛围大变；edit 指令改图保真不足时可退到 hybrid。
+
+| 任务 | 产出 | 状态 |
+|------|------|------|
+| `reason/reason_agent.py` hybrid 模式（`scene_prompt`） | 共用 `reason_system.txt` | ✅ |
+| `reason/hybrid_pipeline.py` | 封装 Reason → `run_gen_pipeline` | 待做 |
+| `data/input/hybrid/hybrid_cases.jsonl` | 如「一束花变两束玫瑰」 | 待做 |
+| edit 参数实验（可选） | iterations / candidates 记录 | 可选 |
 
 hybrid 大致逻辑：
 
