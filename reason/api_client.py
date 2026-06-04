@@ -4,11 +4,15 @@ from __future__ import annotations
 
 import base64
 import json
+import logging
 import mimetypes
 import os
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 def load_env_file(path: str | Path = "config/.env") -> None:
@@ -134,6 +138,7 @@ class MLLMClient:
         if self.config.app_name:
             headers["X-Title"] = self.config.app_name
         timeout = self.config.vision_timeout if use_vision_timeout else self.config.timeout
+        t0 = time.perf_counter()
         with httpx.Client(timeout=timeout) as client:
             response = client.post(url, headers=headers, json=payload)
             try:
@@ -143,6 +148,8 @@ class MLLMClient:
                     f"MLLM API request failed: {response.status_code} {response.text[:500]}"
                 ) from exc
             data = response.json()
+        elapsed = time.perf_counter() - t0
+        logger.info("MLLM %s completed in %.2fs", self.config.model, elapsed)
         return extract_message_content(data["choices"][0]["message"])
 
 

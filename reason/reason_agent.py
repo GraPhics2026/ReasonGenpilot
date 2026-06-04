@@ -46,6 +46,23 @@ Hypothetical instruction:
 Inspect the image carefully. Extract fine-grained visual cues before inferring the edit.
 For edit mode, fill edit_prompt (English, image-editor ready).
 For hybrid mode, fill scene_prompt (English, text-to-image ready) instead of edit_prompt.
+
+CRITICAL for hybrid mode — scene_prompt is a STANDALONE T2I prompt:
+It will be sent directly to an image generator WITHOUT the original image.
+Therefore scene_prompt MUST describe the ENTIRE scene from scratch, NOT just the changed parts.
+- First: describe ALL subjects — every person, animal, object visible in the image.
+  Include what they look like (clothing color, hair, pose, size, breed), what they are doing,
+  and their spatial positions relative to each other.
+- Then: describe the environment (ground, sky, buildings, furniture, vegetation).
+- Finally: apply the hypothetical change to the relevant parts while keeping everything else intact.
+- The result must read like a complete, flowing English paragraph that paints the full picture.
+- BAD example (never do this): "grass, man's sneakers, dog's fur with snow applied"
+- GOOD example: "A man in a blue t-shirt and khaki pants stands next to a golden retriever
+  in a park on a snowy winter day. Fresh white snow covers the ground. Park benches and bare
+  trees in the background under a bright overcast sky. Natural daylight, photorealistic."
+
+Think of it this way: if someone reads your scene_prompt aloud, they should be able to
+visualize the ENTIRE image, not guess what it looks like.
 """
     raw = mllm.chat_vision(image_path, user_prompt, system_prompt=system_prompt, temperature=0.2)
     data = extract_json_object(raw)
@@ -309,12 +326,22 @@ def fallback_edit_prompt(
 
 
 def fallback_scene_prompt(instruction: str, targets: list[str], physics: list[str]) -> str:
-    target_text = ", ".join(targets) if targets else "the scene"
+    """Generate a complete, standalone T2I scene description — not an edit instruction.
+
+    This is used when the MLLM fails to produce a valid scene_prompt in hybrid mode.
+    The prompt must describe the entire scene from scratch since T2I has no access
+    to the original image.
+    """
     outcome = physics[0] if physics else instruction.strip()
-    return (
-        f"A photorealistic image of {target_text} showing the result: {outcome}. "
-        f"Context: {instruction.strip()}. Clear composition, highly detailed."
-    )
+    target_text = ", ".join(targets) if targets else "relevant scene elements"
+    parts = [
+        f"A photorealistic image depicting {target_text}.",
+        f"The visual change applied: {outcome}.",
+        "All original subjects, their appearance, spatial layout, background, and lighting are preserved.",
+        f"Context: {instruction.strip()}.",
+        "Clear composition, highly detailed, professional photography.",
+    ]
+    return " ".join(parts)
 
 
 def _string_list(value: object) -> list[str]:

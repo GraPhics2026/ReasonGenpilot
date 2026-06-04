@@ -1,0 +1,5 @@
+Step 1: The image shows a man standing next to a golden retriever in a sunny park with green grass, trees, and benches. The ground is currently dry and grassy.
+
+Step 2: The hypothetical instruction asks about the visual outcome if it were snowing heavily and the ground was covered in snow.
+
+Step 3: The expected visual outcome includes snow covering the grass, the dog's fur appearing dusted with snow, and the overall atmosphere becoming wintry. The man's clothing, the dog's pose, and the background (trees, benches, skyline) should remain unchanged.

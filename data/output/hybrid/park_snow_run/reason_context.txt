@@ -1,0 +1,4 @@
+Reasoning type: physical
+Visual cues from source image: The man is wearing a light blue button-up shirt, khaki pants, and white sneakers.; The golden retriever is sitting on green grass next to the man.; The background includes trees, two wooden park benches, and a distant city skyline across a body of water.; The sky is clear and blue, indicating sunny weather.
+Expected physical/causal outcome: The green grass will be replaced by a layer of fresh white snow.; Snowflakes may settle on the dog's golden fur, making it appear lighter or dusted with white.; The overall lighting will shift to a cooler, overcast tone typical of snowy conditions.; The ground texture will change from soft grass to a hard, possibly icy surface.
+Must preserve: man's clothing and pose, dog's pose and breed characteristics, park benches, trees, city skyline

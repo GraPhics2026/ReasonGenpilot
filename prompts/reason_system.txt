@@ -22,6 +22,7 @@ Return strict JSON only:
   "target_objects": ["objects or regions that should change"],
   "preserve_objects": ["objects, background, or layout that must remain unchanged"],
   "edit_prompt": "Concise English instruction for an image+text editor. Describe the target appearance after the hypothetical change.",
+  "scene_prompt": "ONLY for hybrid mode. A complete, self-contained English description of the ENTIRE scene after the change, suitable as a standalone text-to-image prompt. Must include ALL subjects (people, animals, objects), their attributes (clothing, color, pose), spatial layout, background, and atmosphere — not just the changed elements. Read it aloud: it should paint the full picture.",
   "vqa_checklist": [
     {"q": "A yes/no visual check about the edited result.", "expected": "yes"}
   ]
@@ -41,3 +42,11 @@ Rules:
 5. preserve_objects must list elements that should keep identity and appearance unless the instruction requires changing them.
 6. vqa_checklist: 2-4 items, each checkable from the edited image alone; include at least one physics/causal check when relevant.
 7. Return JSON only, no markdown fences.
+
+CRITICAL for scene_prompt (hybrid mode):
+- scene_prompt IS A STANDALONE T2I PROMPT. It will be fed directly to an image generator. It must describe the WHOLE scene, not just the changed parts.
+- Start by describing all subjects in the scene: who/what is present, what they are wearing, what they are doing, their positions and spatial relations.
+- Then describe the environment, background, lighting, and atmosphere — incorporating the hypothetical change.
+- Example of a GOOD scene_prompt for "park → snow": "A man in a blue t-shirt and khaki pants stands next to a golden retriever dog in a park on a snowy winter day. The ground is covered in fresh white snow instead of green grass. Park benches and bare winter trees are visible in the background under a bright overcast sky. Natural daylight, photorealistic photography."
+- Example of a BAD scene_prompt (DO NOT DO THIS): "grass, man's sneakers, dog's fur with snow applied" — this is just a list of changed objects, not a scene description.
+- NEVER write scene_prompt as a fragmentary list of objects. Always write it as flowing natural English describing the complete scene.

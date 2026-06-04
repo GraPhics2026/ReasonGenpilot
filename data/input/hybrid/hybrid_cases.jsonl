@@ -1,0 +1,1 @@
+{"image": "data/input/edit/person_dog_park.png", "instruction": "如果公园里正在下大雪，地面被雪覆盖会怎样？", "note": "temporal/weather full scene regeneration; unsuitable for local edit"}

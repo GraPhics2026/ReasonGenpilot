@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import html
 import json
+import logging
 import mimetypes
 import os
 import shutil
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from textwrap import wrap
@@ -14,6 +16,8 @@ from typing import Any
 
 from .api_client import load_env_file
 from .schemas import EditBackend
+
+logger = logging.getLogger(__name__)
 
 
 def _env_bool(name: str, default: bool) -> bool:
@@ -151,6 +155,8 @@ class EditClient:
             "Content-Type": "application/json",
         }
         last_error: Exception | None = None
+        data: dict[str, Any] = {}
+        t0 = time.perf_counter()
         for _ in range(2):
             try:
                 with httpx.Client(timeout=180, trust_env=False) as client:
@@ -167,6 +173,8 @@ class EditClient:
                 last_error = exc
         else:
             raise RuntimeError(f"DashScope edit network error: {last_error}") from last_error
+        elapsed = time.perf_counter() - t0
+        logger.info("Edit dashscope completed in %.2fs", elapsed)
 
         output.parent.mkdir(parents=True, exist_ok=True)
         output.with_suffix(".response.json").write_text(
@@ -178,10 +186,13 @@ class EditClient:
         if not image_url:
             raise RuntimeError(f"DashScope edit response did not contain an image URL: {str(data)[:500]}")
 
+        t_img = time.perf_counter()
         with httpx.Client(timeout=180, trust_env=False) as client:
             image_response = client.get(image_url)
             image_response.raise_for_status()
             output.write_bytes(image_response.content)
+        elapsed = time.perf_counter() - t_img
+        logger.info("Edit image download completed in %.2fs", elapsed)
         return output
 
 

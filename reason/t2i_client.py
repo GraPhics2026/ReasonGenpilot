@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import html
 import json
+import logging
 import os
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from textwrap import wrap
@@ -17,6 +19,8 @@ from typing import Any
 
 from .api_client import load_env_file
 from .schemas import GenerationBackend
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(slots=True)
@@ -96,6 +100,7 @@ class T2IClient:
             "Authorization": f"Bearer {self.config.api_key}",
             "Content-Type": "application/json",
         }
+        t0 = time.perf_counter()
         with httpx.Client(timeout=120) as client:
             response = client.post(url, headers=headers, json=payload)
             try:
@@ -105,6 +110,8 @@ class T2IClient:
                     f"T2I API request failed: {response.status_code} {response.text[:500]}"
                 ) from exc
             data = response.json()
+        elapsed = time.perf_counter() - t0
+        logger.info("T2I siliconflow completed in %.2fs", elapsed)
 
         output.parent.mkdir(parents=True, exist_ok=True)
         output.with_suffix(".response.json").write_text(
@@ -158,6 +165,8 @@ class T2IClient:
             "Content-Type": "application/json",
         }
         last_error: Exception | None = None
+        data: dict[str, Any] = {}
+        t0 = time.perf_counter()
         for _ in range(2):
             try:
                 with httpx.Client(timeout=180, trust_env=False) as client:
@@ -174,6 +183,8 @@ class T2IClient:
                 last_error = exc
         else:
             raise RuntimeError(f"DashScope T2I network error: {last_error}") from last_error
+        elapsed = time.perf_counter() - t0
+        logger.info("T2I dashscope completed in %.2fs", elapsed)
 
         output.parent.mkdir(parents=True, exist_ok=True)
         output.with_suffix(".response.json").write_text(
@@ -192,10 +203,13 @@ class T2IClient:
         if not image_url:
             raise RuntimeError(f"DashScope response did not contain an image URL: {str(data)[:500]}")
 
+        t0 = time.perf_counter()
         with httpx.Client(timeout=180, trust_env=False) as client:
             image_response = client.get(image_url)
             image_response.raise_for_status()
             output.write_bytes(image_response.content)
+        elapsed = time.perf_counter() - t0
+        logger.info("T2I image download completed in %.2fs", elapsed)
         return output
 
     def _generate_comfyui(self, prompt: str, output: Path, seed: int | None) -> Path:
