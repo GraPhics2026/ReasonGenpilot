@@ -1,0 +1,4 @@
+Reasoning type: story
+Visual cues from source image: Camera viewpoint: eye-level shot, facing slightly left of center towards the subject.; Foreground: man standing on the left, golden retriever sitting to his right on the grass.; Center: clear blue sky above, with tree trunks and branches framing the top half of the image.; Background: two wooden park benches on the right side, a paved path behind them, and a distant city skyline across a body of water.
+Expected physical/causal outcome: Snow will accumulate on all flat surfaces, including the grass, benches, and ground around the trees.; Footprints or tracks will be visible in the snow where people walk.; The dog's fur may appear fluffier due to clinging snow particles.; The man's clothing may show signs of snowfall, such as small white specks.
+Must preserve: man's pose and position, dog's pose and position, tree trunks and branches, paved path, distant skyline

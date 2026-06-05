@@ -1,0 +1,5 @@
+Step 1: The image shows a sunny day in a park with green grass, trees, benches, and a man with his dog. The instruction asks about the scenario where the park is snowy and crowded.
+
+Step 2: The counterfactual change involves two elements: (a) the ground being covered in snow instead of grass, and (b) the park having many people present.
+
+Step 3: The expected visual outcome includes snow on the ground, visible footprints or tracks from people walking, and a crowd of people filling the park space. The man and dog remain as central figures but are now surrounded by others.

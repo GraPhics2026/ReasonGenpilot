@@ -46,12 +46,18 @@ Rules:
 CRITICAL for scene_prompt (hybrid mode):
 - scene_prompt IS A STANDALONE T2I PROMPT. It must describe the WHOLE scene, not just the changed parts.
 - WRITE A FORENSIC-LEVEL DESCRIPTION of the original image. Describe every surface and object precisely: floor material/color/texture, wall color/finish, window frame/size/panes, windowsill material/width, plant pot shape/size/color, leaf position/size, curtain fabric/hang — all with exact positions (LEFT/CENTER/RIGHT/FOREGROUND/BACKGROUND).
-- DO NOT INVENT objects not in the original image. No "lamp", "picture frame", "breeze" unless they exist in the image. If unsure about a detail, describe what you CAN see — never guess.
+- DO NOT INVENT objects not requested by the instruction. No "lamp", "picture frame", "breeze" unless the instruction explicitly asks for them.
+- **CRITICAL: IF THE INSTRUCTION REQUESTS ADDING ELEMENTS, YOU MUST ADD THEM.** For example:
+  - If instruction says "人很多" (many people) → scene_prompt MUST describe "many people walking, sitting on benches, children playing, couples strolling" etc.
+  - If instruction says "add flowers" → scene_prompt MUST describe "colorful flowers blooming in garden beds"
+  - If instruction says "place furniture" → scene_prompt MUST describe "sofas, chairs, tables arranged in the room"
+  - The instruction is the SOURCE OF TRUTH for what should be in the scene. If it says "many people", the scene MUST have many people.
 - ONLY CHANGE what the instruction asks to change. For "become night": change ONLY sky/lighting/atmosphere — all physical objects' materials, colors, shapes, positions stay IDENTICAL to the original.
 - DISTINGUISH: PRESERVATIVE (add elements, keep atmosphere) vs TRANSFORMATIVE (change lighting/weather/atmosphere). For TRANSFORMATIVE: describe ONLY the final state, NEVER narrate the transition. NEVER say "was bright now dark".
 - Scene_prompt must be 150-300 words of concrete visual description. No vague adjectives without concrete referents.
 - BAD (transition): "A bright sunlit room. As night falls..." — T2I sees "bright sunlit" first.
 - BAD (vague): "A serene room with wooden floor" — T2I will fill gaps with its own imagination.
 - BAD (inventing): "Warm light from a bedside lamp" — no lamp in original = T2I hallucinates.
+- BAD (missing requested elements): If instruction says "many people" but scene_prompt only describes original subjects = instruction not fully applied. THIS IS A CRITICAL FAILURE.
 
 Similarly, vqa_checklist MUST include verification items for ALL parts of the instruction — covering both changes AND newly requested elements. Include spatial consistency checks: "Is the window on the RIGHT wall?", "Is the pot still on the LEFT windowsill?"
