@@ -1,0 +1,5 @@
+Step 1: Observe key objects in the image: a man standing in the center, a golden retriever dog sitting to his left on green grass, trees in the background on the left and center, wooden benches on the left and right in the background, a body of water in the far background, and a clear blue sky with bright daylight.
+
+Step 2: Infer the counterfactual change implied by the instruction: 'if there are many people in the park and the ground is covered with snow' requires adding multiple people to the scene and transforming the ground from green grass to snow-covered, altering the atmosphere to a winter setting.
+
+Step 3: Derive the expected visual outcome: The ground will be white and textured with snow, people will be added in winter attire, the man and dog will remain in place with unchanged identities, trees and benches will persist, and lighting will shift to overcast or soft light typical of snowy conditions. The original sunny atmosphere will be replaced by a colder, livelier park scene with snow.

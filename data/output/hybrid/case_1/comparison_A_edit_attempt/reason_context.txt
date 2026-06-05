@@ -1,0 +1,4 @@
+Reasoning type: causal
+Visual cues from source image: Camera viewpoint: eye-level, frontal view facing the subjects with park in background.; Spatial positions: man CENTER, dog RIGHT of man, benches BACKGROUND LEFT and RIGHT, trees BACKGROUND LEFT, city skyline BACKGROUND CENTER.; Dominant color palette: green grass, blue sky, light blue shirt, beige pants, golden fur.; Lighting quality: bright natural daylight with soft, diffused shadows from the sun.
+Expected physical/causal outcome: Snow cover would replace green grass with a white, textured surface, potentially adding snow on benches and tree bases.; Crowds add visual density with people in various poses and clothing, altering the scene's activity level.; Lighting may become softer and cooler if snow implies overcast weather, affecting shadow sharpness.; Ground texture changes from grass blades to a smooth or uneven snow layer.
+Must preserve: man, dog, trees, benches, city skyline background

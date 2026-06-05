@@ -1,6 +1,6 @@
 # ReasonGenPilot
 
-无训练的图像生成与假设性编辑 Agent 系统。当前仓库已完成 **gen** 文生图优化通路与 **edit** 假设性编辑通路。
+无训练的图像生成与假设性编辑 Agent 系统。当前仓库已完成 **gen** 文生图优化通路、**edit** 假设性编辑通路与 **hybrid** 整图重生成通路。
 
 ## 项目目标
 
@@ -12,7 +12,7 @@ ReasonGenPilot 计划支持三条通路：
 | `edit` | 原图 + 假设性指令 | 推理反事实变化，指令式编辑并 VQA 验证 |
 | `hybrid` | 原图 + 假设性指令，但需**整图重生成** | Reason 展开 `scene_prompt`，再走 gen 文生图（**非**指令编辑） |
 
-当前已实现 `gen` 与 `edit`；`hybrid` 的 Reason 接口已有（`mode="hybrid"`），`hybrid_pipeline.py`、router 和 demo 待成员 3/4 接入。
+当前已实现 `gen`、`edit` 与 `hybrid`；router 和 demo 待成员 4 接入。
 
 ## 已实现功能
 
@@ -33,6 +33,27 @@ ReasonGenPilot 计划支持三条通路：
 - 输出 `reason_analysis.json`、`reason_context.txt` 便于调试与报告
 - `edit` 通路命令行入口与统一返回结构
 
+**hybrid 通路（成员 3）**
+
+- Reason Agent hybrid 模式：看图推理 → 输出完整 `scene_prompt`（英文 T2I 场景描述）
+- `scene_prompt` 7 层质量保障（碎片检测、指令元素补全、颜色一致性、视角/风格锚点注入、人物年龄/光照/房间几何补全）
+- 复用 `run_gen_pipeline()` 完成 T2I 生成（**不传原图**，从零画整图）
+- VQA 验证：MLLM 对比生成图 vs 推理清单，输出 score/passed/errors
+- 输出 `hybrid_final.json`、`reason_analysis.json`、`reasoning_chain.txt`、`scene_prompt.txt`
+- `hybrid` 通路命令行入口；与 gen/edit 统一的返回结构
+- 4 个测试用例（公园雪景/花分两束/室内深夜/秋季落叶）及 36 个单元测试
+- 对比实验脚本 `scripts/run_comparison.py`（edit硬上 vs gen直出 vs hybrid）
+
+**hybrid 通路（成员 3）**
+
+- Reason Agent `mode="hybrid"` 输出 `scene_prompt`（与 edit 共用 `reason_system.txt`）
+- `scene_prompt` 自动质量保障：7 个后处理函数（碎片检测、元素补全、颜色一致性、视角锚点、风格锚点、人物年龄、光照行为、房间几何）
+- 封装 `run_hybrid_pipeline()`：Reason → `scene_prompt` → GenPilot T2I → VQA 验证
+- 输出三阶段目录结构（`01_reasoning/` + `02_generation/` + `03_verification/`）
+- 4 个测试用例（雪景公园、花分两束、白天变深夜、秋季变换）
+- 36 个单元测试全部通过
+- `hybrid` 通路命令行入口与统一返回结构
+
 ## 目录结构
 
 ```text
@@ -42,10 +63,12 @@ ReasonGenPilot/
 ├── data/
 │   ├── input/
 │   │   ├── original_prompts.txt
-│   │   └── edit/edit_cases.jsonl
+│   │   ├── edit/edit_cases.jsonl
+│   │   └── hybrid/hybrid_cases.jsonl
 │   └── output/
 │       ├── gen/
-│       └── edit/
+│       ├── edit/
+│       └── hybrid/
 ├── prompts/
 │   ├── gen_system.txt
 │   ├── reason_system.txt
@@ -57,9 +80,13 @@ ReasonGenPilot/
 │   ├── edit_pipeline.py
 │   ├── edit_client.py
 │   ├── edit_verify_loop.py
+│   ├── hybrid_pipeline.py
 │   ├── reason_agent.py
 │   ├── schemas.py
-│   └── t2i_client.py
+│   ├── t2i_client.py
+│   └── test_hybrid_pipeline.py
+├── scripts/
+│   └── run_comparison.py
 ├── requirements.txt
 ├── README.md
 └── 对接说明.md
@@ -147,6 +174,35 @@ python -m reason.edit_pipeline `
   --real-api
 ```
 
+### hybrid：Dry-run 测试
+
+```powershell
+python -m reason.hybrid_pipeline `
+  --image data/input/hybrid/bouquet.png `
+  --instruction "如果这一束花分成两束独立的玫瑰，会是什么样子？" `
+  --output data/output/hybrid/test_dry
+```
+
+### hybrid：真实 API 出图
+
+```powershell
+python -m reason.hybrid_pipeline `
+  --image data/input/hybrid/sunny_indoor.png `
+  --instruction "如果这间阳光明媚的房间突然变成深夜，会是什么样子？" `
+  --output data/output/hybrid/night_indoor `
+  --real-api `
+  --iterations 1
+```
+
+### hybrid 对比实验
+
+运行三种方案（edit硬上 / gen直出 / hybrid）的对比图生成：
+
+```powershell
+python scripts/run_comparison.py --real-api           # 全部 4 个用例
+python scripts/run_comparison.py --real-api --cases 1,2  # 指定用例
+```
+
 ## 返回结构
 
 `run_gen_pipeline()` 返回示例：
@@ -161,6 +217,8 @@ python -m reason.edit_pipeline `
 ```
 
 `run_edit_pipeline()` 返回 `EditPipelineResult`，含 `edit_prompt`、`vqa_checklist`、`vqa_result`、`iterations`、`metadata.reasoning_type` 等字段，`route` 为 `"edit"`。
+
+`run_hybrid_pipeline()` 返回 `HybridPipelineResult`，含 `scene_prompt`、`vqa_checklist`、`vqa_result`（score/passed/errors）、`visual_cues`、`physics_implications`、`preserve_objects` 等字段，`route` 为 `"hybrid"`。
 
 单独调用 Reason Agent 时，`ReasonResult` 还包含 `reasoning_type`、`visual_cues`、`physics_implications`、`preserve_objects`（详见 [对接说明.md](./对接说明.md)）。
 
@@ -181,12 +239,11 @@ python -m reason.edit_pipeline `
 
 ## 后续开发
 
-**hybrid（成员 3）**：有原图 + 假设性指令，但变化过大、不适合在原图上指令编辑时（如物体数量重组、昼夜整场景切换）→ Reason Agent 输出 `scene_prompt`，复用 `run_gen_pipeline()` 从零出图。与 edit 共用 `reason_system.txt` 与四类推理字段，**不走 Edit API**。
+**hybrid（成员 3）✅ 已完成**：完整 pipeline 已实现，含 Reason Agent hybrid 模式、`scene_prompt` 7 层质量保障、GenPilot T2I 复用、VQA 验证、4 个测试用例、36 个单元测试。详见 [hybrid对比实验.md](./hybrid对比实验.md) 和 [对接说明.md](./对接说明.md) 第 5 节。
 
-- 待做：`reason/hybrid_pipeline.py`、`data/input/hybrid/hybrid_cases.jsonl`
-- 已有：`run_reason_agent(..., mode="hybrid")` → `scene_prompt`
+**集成（成员 4）**：router、统一入口 `pipeline.py`、Gradio demo。三条 pipeline（gen / edit / hybrid）接口已统一，可直接 import 调用。详见 [对接说明.md](./对接说明.md) 第 6 节。
 
-**集成（成员 4）**：router、统一入口 `pipeline.py`、Gradio demo。
+对接细节见 [对接说明.md](./对接说明.md) 第 6 节（三条通路统一调用、Router 模板、pipeline.py 模板、Gradio 集成代码）。
 
 ## GenPilot 集成
 

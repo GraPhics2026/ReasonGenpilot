@@ -1,0 +1,11 @@
+{
+  "score": 1.0,
+  "passed": [
+    "Is the ground covered in white snow?",
+    "Are there many people present in the park?",
+    "Is the man still visible with his original appearance (East Asian, 30s, light blue shirt)?",
+    "Is the golden retriever dog still present next to the man?"
+  ],
+  "errors": [],
+  "summary": "All key visual constraints are satisfied, with the snowy ground, crowd, and preserved man and dog."
+}
